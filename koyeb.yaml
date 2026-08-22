@@ -1,0 +1,46 @@
+# Koyeb configuration for Rails 8 + Solid Queue
+# Deploy: koyeb init -> koyeb deploy
+
+services:
+  - name: web
+    type: web
+    build:
+      dockerfile: Dockerfile
+    env:
+      - name: RAILS_ENV
+        value: production
+      - name: RAILS_MASTER_KEY
+        value: ${RAILS_MASTER_KEY}
+      - name: DATABASE_URL
+        value: ${DATABASE_URL}
+    ports:
+      - port: 3000
+        protocol: http
+    healthcheck:
+      http:
+        path: /up
+    scaling:
+      min: 1
+      max: 1
+
+  - name: worker
+    type: worker
+    build:
+      dockerfile: Dockerfile
+    env:
+      - name: RAILS_ENV
+        value: production
+      - name: RAILS_MASTER_KEY
+        value: ${RAILS_MASTER_KEY}
+      - name: DATABASE_URL
+        value: ${DATABASE_URL}
+    command: ["bundle", "exec", "rake", "solid_queue:start"]
+    scaling:
+      min: 1
+      max: 1
+
+databases:
+  - name: db
+    engine: PG
+    version: "16"
+    plan: free
