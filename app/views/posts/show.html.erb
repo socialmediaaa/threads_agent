@@ -1,0 +1,73 @@
+<div class="max-w-3xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Post Details</h1>
+    <div class="space-x-2">
+      <% if @post.draft? %>
+        <%= button_to "Approve", approve_post_path(@post, scheduled_at: Time.current.iso8601), method: :patch, class: "px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700" %>
+      <% end %>
+      <%= link_to "Back", posts_path, class: "border border-gray-300 rounded-md px-3 py-1 text-sm hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6 space-y-4">
+    <div>
+      <span class="inline-flex px-2 py-1 text-xs font-semibold leading-5 rounded-full
+        <%= case @post.status
+            when 'draft' then 'bg-gray-100 text-gray-800'
+            when 'queued' then 'bg-yellow-100 text-yellow-800'
+            when 'published' then 'bg-green-100 text-green-800'
+            when 'failed' then 'bg-red-100 text-red-800'
+            end %>">
+        <%= @post.status.humanize %>
+      </span>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Account</p>
+      <p class="font-medium"><%= @post.thread_account.username %> (<%= @post.thread_account.threads_user_id %>)</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Content</p>
+      <pre class="whitespace-pre-wrap bg-gray-50 p-4 rounded-lg text-gray-900"><%= @post.content %></pre>
+    </div>
+
+    <% if @post.media_url.present? %>
+      <div>
+        <p class="text-sm text-gray-500">Media URL</p>
+        <p class="font-mono text-sm text-indigo-600"><%= post.media_url %></p>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-2 gap-4 pt-4 border-t">
+      <div>
+        <p class="text-sm text-gray-500">Created</p>
+        <p><%= @post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Scheduled</p>
+        <p><%= @post.scheduled_at&.strftime("%Y-%m-%d %H:%M:%S") || "—" %></p>
+      </div>
+    </div>
+
+    <% if @post.published? %>
+      <div class="grid grid-cols-2 gap-4 pt-4 border-t">
+        <div>
+          <p class="text-sm text-gray-500">Published</p>
+          <p><%= @post.published_at&.strftime("%Y-%m-%d %H:%M:%S") || "—" %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Threads Post ID</p>
+          <p class="font-mono text-sm"><%= @post.threads_post_id %></p>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @post.failed? %>
+      <div class="pt-4 border-t bg-red-50 p-4 rounded">
+        <p class="text-sm text-gray-500">Error</p>
+        <p class="text-red-700 font-mono text-sm"><%= @post.error_message %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

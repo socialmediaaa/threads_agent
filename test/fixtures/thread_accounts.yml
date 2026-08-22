@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  threads_user_id: "111111111"
+  username: "user_one"
+  access_token: "token_one"
+  token_expires_at: 2026-08-21 23:24:15
+
+two:
+  threads_user_id: "222222222"
+  username: "user_two"
+  access_token: "token_two"
+  token_expires_at: 2026-08-21 23:24:15

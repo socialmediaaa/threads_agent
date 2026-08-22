@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  thread_account: one
+  content: MyText
+  media_url: MyString
+  status: 0
+  scheduled_at: 2026-12-31 23:33:09
+  published_at: 2026-08-21 23:33:09
+  threads_media_id: MyString
+  threads_post_id: MyString
+  error_message: MyText
+
+two:
+  thread_account: two
+  content: MyText
+  media_url: MyString
+  status: 0
+  scheduled_at: 2026-12-31 23:33:09
+  published_at: 2026-08-21 23:33:09
+  threads_media_id: MyString
+  threads_post_id: MyString
+  error_message: MyText

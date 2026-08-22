@@ -1,0 +1,7 @@
+# config/recurring.yml
+# Recurring jobs for Solid Queue
+
+publish_due_posts_job:
+  cron: "*/1 * * * *"  # Every minute
+  class: "PublishDuePostsJob"
+  description: "Publish due posts to Threads"
